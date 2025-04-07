@@ -120,3 +120,34 @@ the local instance of the database with the data from the
 Following the instructions in the `README.md` file of the `metriq-postgres` repo will
 populate your local instance of the database with dummy data from the `.JSON`
 files.
+
+### How to deploy
+
+Make sure your `config.js` files in the Metriq repositories set `config.isDebug = false` for the production environment. (This controls the URLs where Metriq expects resources to be, depending on environment.)
+
+Build the `metriq-app` repository, from the same directory where your `npm` packages are installed:
+
+```
+npm run build
+```
+
+This creates a folder called "`build`". This will go on the production server. Typically, you might want to rename it something like `new_build`, move it to the server with `scp` for local-to-remote copy, and connect to the server with `ssh`. (You'll need the server SSH key, for both `ssh` and `scp`.) In the `ssh` session, you need your environment variables set appropriately, similar to what was described above for the case of general development. To load them into a working shell, you might store them in a `metriq_env_vars.sh` script and run them with `. ./metriq_env_vars.sh` (The extra `.` in front is necessary to retain the environment variables in the current shell session after return.)
+
+Once your environment variables are loaded in your `ssh` shell, if the Metriq server is currently running, you need to shut down the two instances of `screen` that keep the front-end and back-end server programs running in the background. **Once you do this, the remaining steps are time-sensitive, as the Metriq server will be down until you finish publishing.** In the `metriq-app` folder on the server, move the `build` folder to `old_build`. (You can delete the previous `old_build` folder if it exists.) Move `new_build` folder (which is the folder you just built and copied to the server, to publish) to `build`.
+
+If there was an update to the back-end server, enter the (inner, second-level) `metriq-api` folder and pull the updates from the repository. Also run `npm i` or `npm update` as appropriate, in that same folder. If there were any database migrations, run the following command to apply them:
+```
+npm run db:migrate
+```
+
+There should be a script, `metriq_start.sh`, in the top-level home folder of the server. Its content looks like this:
+
+```
+. ./metriq_env_vars.sh
+cd /home/ubuntu/metriq/metriq-api/metriq-api/
+screen -S metriq-api -d -m node index.js
+cd /home/ubuntu/metriq/metriq-api/metriq-app
+screen -S metriq-app -d -m server/server.sh
+```
+
+Run it. **Check that the Metriq front-end is back up and running.** (You have finished deployment!)
