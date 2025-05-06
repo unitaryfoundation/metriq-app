@@ -593,7 +593,8 @@ function QuantumVolumeChart (props) {
           .attr('text-anchor', 'end')
           .text(xAxisText)
       )
-    const yAxis = isl ? d3.axisLeft(yScale).tickFormat(d3.format('~s')) : d3.axisLeft(yScale)
+    const yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2f'))
+
     // append y axis
     svg
       .append('g')
