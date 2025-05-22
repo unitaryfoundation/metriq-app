@@ -43,6 +43,11 @@ app.get('*', (req, res, next) => {
 
     if (req.url.startsWith('/Submission/')) {
       const id = truncateBefore(req.url, '/Submission/')
+      const idPattern = /^[a-zA-Z0-9_-]+$/; // Allow only alphanumeric, underscores, and hyphens
+      if (!idPattern.test(id)) {
+        console.error('Invalid ID format:', id);
+        return res.status(400).send('Invalid ID format');
+      }
       const route = config.api.getUriPrefix() + '/submission/' + id
       await (axios.get(route)
         .then(subRes => {
@@ -70,6 +75,11 @@ app.get('*', (req, res, next) => {
         }))
     } else if (req.url.startsWith('/Platform/')) {
       const id = truncateBefore(req.url, '/Platform/')
+      const idPattern = /^[a-zA-Z0-9_-]+$/; // Allow only alphanumeric, underscores, and hyphens
+      if (!idPattern.test(id)) {
+        console.error('Invalid ID format:', id);
+        return res.status(400).send('Invalid ID format');
+      }
       const route = config.api.getUriPrefix() + '/platform/' + id
       await (axios.get(route)
         .then(subRes => {
