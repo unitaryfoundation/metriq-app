@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import "./HierarchyTree.css";
+import "../styles/HierarchyTree.css";
 
 const HierarchyTree = ({
   data,
@@ -10,7 +10,6 @@ const HierarchyTree = ({
 }) => {
   const svgRef = useRef();
   const [expandedNodes, setExpandedNodes] = useState(new Set());
-  const [prevData, setPrevData] = useState(null);
 
   useEffect(() => {
     if (!data || !svgRef.current) return;
@@ -53,7 +52,7 @@ const HierarchyTree = ({
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Create the tree layout
-    const tree = d3.tree().size([height, width]).nodeSize([50, 150]); // Add fixed node sizing
+    const tree = d3.tree().size([height, width]).nodeSize([50, 150]);
 
     // Create the root node and process the data
     const root = d3.hierarchy(data);
@@ -92,8 +91,7 @@ const HierarchyTree = ({
       .y((d) => d.x);
 
     // Add the links
-    const link = g
-      .selectAll(".link")
+    g.selectAll(".link")
       .data(links)
       .join(
         (enter) =>
@@ -266,9 +264,6 @@ const HierarchyTree = ({
       .attr("class", "zoom-button")
       .text("−")
       .on("click", () => zoom.scaleBy(svg.transition().duration(750), 1 / 1.3));
-
-    // Store current data for comparison in next update
-    setPrevData(data);
   }, [data, expandedNodes, onNodeClick, onNodeExpand, searchTerm]);
 
   return (

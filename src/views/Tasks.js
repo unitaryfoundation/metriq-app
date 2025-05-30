@@ -376,14 +376,29 @@ class Tasks extends React.Component {
           <div className={`col-${selectedNode ? "8" : "12"}`}>
             {this.state.viewMode === "list" ? (
               <FormFieldWideRow className="centered-tabs">
-                <CategoryScroll
-                  className="col-lg-9 col"
-                  type="task"
-                  isLoading={this.state.isLoading}
-                  items={this.state.alphabetical}
-                  isLoggedIn={this.props.isLoggedIn}
-                  heading="Top-level task categories"
-                />
+                <div className="col-lg-9 col">
+                  <h3>Task Categories</h3>
+                  {this.state.isLoading ? (
+                    <div className="loading-overlay">
+                      <div className="loading-spinner"></div>
+                    </div>
+                  ) : (
+                    <div className="task-list">
+                      {this.state.tasks
+                        .filter((task) => !task.parentTaskId)
+                        .map((task) => (
+                          <div
+                            key={task.id}
+                            className="task-item"
+                            onClick={() => this.handleNodeClick(task)}
+                          >
+                            <h4>{task.name}</h4>
+                            {task.description && <p>{task.description}</p>}
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
               </FormFieldWideRow>
             ) : (
               <div
@@ -400,6 +415,7 @@ class Tasks extends React.Component {
                       data={this.state.hierarchyData}
                       onNodeClick={this.handleNodeClick}
                       onNodeExpand={this.handleNodeExpand}
+                      searchTerm={searchTerm}
                     />
                   )
                 )}
