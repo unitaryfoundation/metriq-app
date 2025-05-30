@@ -34,6 +34,7 @@ import Qedc from './views/Qedc'
 import Vqa from './views/Vqa'
 import Progress from './views/Progress'
 import Sota from './views/Sota'
+import User from './views/User'
 
 const MainRouter = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -266,6 +267,11 @@ const MainRouter = (props) => {
           exact
           path='/Submission/:id'
           render={(p) => <Submission {...p} isLoggedIn={isLoggedIn} onLogin={handleLogin} />}
+        />
+        <Route
+          exact
+          path='/User/:userId'
+          render={(p) => <User {...p} isLoggedIn={isLoggedIn} onLogin={handleLogin} />}
         />
         <Route
           exact
