@@ -27,12 +27,13 @@ const AuthNavRight = () =>
       <NavDropdown.Item as={Link} to='/Profile' eventKey='14'><p className='font-weight-bold'>Settings</p></NavDropdown.Item>
       <NavDropdown.Item as={Link} to='/AddSubmission' eventKey='15'><p className='font-weight-bold'>Add Submission</p></NavDropdown.Item>
       <NavDropdown.Item as={Link} to='/MySubmissions' eventKey='16'><p className='font-weight-bold'>My Submissions</p></NavDropdown.Item>
-      <NavDropdown.Item as={Link} to='/Token' eventKey='17'><p className='font-weight-bold'>API Token</p></NavDropdown.Item>
-      <NavDropdown.Item as={Link} to='/Password' eventKey='18'><p className='font-weight-bold'>Change password</p></NavDropdown.Item>
+      <NavDropdown.Item as={Link} to='/MyFollows' eventKey='17'><p className='font-weight-bold'>My Follows</p></NavDropdown.Item>
+      <NavDropdown.Item as={Link} to='/Token' eventKey='18'><p className='font-weight-bold'>API Token</p></NavDropdown.Item>
+      <NavDropdown.Item as={Link} to='/Password' eventKey='19'><p className='font-weight-bold'>Change password</p></NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item onClick={handleOnClick} eventKey='19'><p className='font-weight-bold'>Logout</p></NavDropdown.Item>
+      <NavDropdown.Item onClick={handleOnClick} eventKey='20'><p className='font-weight-bold'>Logout</p></NavDropdown.Item>
     </NavDropdown>
-    <Nav.Link as={Link} to='/AddSubmission' eventKey='20'><Button variant='primary' className='metriq-navbar-button submit-button'>Submit</Button></Nav.Link>
+    <Nav.Link as={Link} to='/AddSubmission' eventKey='21'><Button variant='primary' className='metriq-navbar-button submit-button'>Submit</Button></Nav.Link>
   </Nav>
 
 export default AuthNavRight

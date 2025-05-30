@@ -15,6 +15,7 @@ import FAQ from './views/FAQ'
 import Profile from './views/Profile'
 import AddSubmission from './views/AddSubmission'
 import MySubmissions from './views/MySubmissions'
+import MyFollows from './views/MyFollows'
 import SubmissionsPublic from './views/SubmissionsPublic'
 import Token from './views/Token'
 import Password from './views/Password'
@@ -216,6 +217,11 @@ const MainRouter = (props) => {
           exact
           path='/MySubmissions'
           component={MySubmissions}
+        />
+        <Route
+          exact
+          path='/MyFollows'
+          component={MyFollows}
         />
         <Route
           exact
