@@ -1,0 +1,29 @@
+title,reference,year,domain,task_name,task_id,submission_id,num_qubits,num_gates,achieved,subsetName
+Quantum supremacy using a programmable superconducting processor,"Nature volume 574, pages 505–510 (2019)",2019,Quantum supremacy,Random circuit sampling,47,695,53,1543,true,Classically intractable
+Strong quantum computational advantage using a superconducting quantum processor,"Phys. Rev. Lett. 127, 180501 (2021-10-25)",2021,Quantum supremacy,Random circuit sampling,47,69,56,1590,true,Classically intractable
+Evidence for the utility of quantum computing before fault tolerance,"Nature volume 618, pages 500–505 (2023)",2023,Quantum supremacy,2D transverse-field Ising model,195,653,127,14400,true,Classically intractable
+"Quantinuum H-Series quantum computer accelerates through 3 more performance records for quantum volume: 2^17, 2^18, and 2^19",Quantinuum blog post (2023),2023,Quantum supremacy,Quantum volume,34,642,19,532,true,Other
+How to compute a 256-bit elliptic curve private key with only 50 million Toffoli gates,arXiv:2306.08585,2023,Cryptography,ECDLP,4,696,1152,50000000,false,Both
+A Threshold for Quantum Advantage in Derivative Pricing,arXiv:2012.03819,2020,Finance,Derivative pricing,0,697,8000,12000000000,false,Quantum advantage
+Towards Quantum Advantage in Financial Market Risk using Quantum Gradient Algorithms,arXiv:2111.12509,2021,Finance,Derivative pricing,0,698,12000,12000000000,false,Quantum advantage
+Using Q# to estimate resources needed for quantum advantage in derivative pricing,https://cloudblogs.microsoft.com/quantum/2022/09/15/using-q-to-estimate-resources-needed-for-quantum-advantage-in-derivative-pricing/,2022,Finance,Derivative pricing,0,699,,,false,Quantum advantage
+Derivative Pricing using Quantum Signal Processing,arXiv:2307.14310,2023,Finance,Derivative pricing,0,700,4700,1000000000,false,Quantum advantage
+Assessing requirements to scale to practical quantum advantage,arXiv:2211.07629,2022,Physics simulation,Quantum dynamics,0,701,230,103000000000,false,Both
+Assessing requirements to scale to practical quantum advantage,arXiv:2211.07629,2022,Physics simulation,Quantum chemistry,0,701,2740,33300000000000000,false,Both
+Assessing requirements to scale to practical quantum advantage,arXiv:2211.07629,2022,Cryptography,Factoring,0,701,25481,28600000000000000,false,Both
+Reliably assessing the electronic structure of cytochrome P450 on today's classical computers and tomorrow's quantum computers,arXiv:2202.01244,2022,Physics simulation,Quantum chemistry,0,726,1434,7800000000,false,Both
+Reducing the Number of Qubits in Quantum Factoring,cryptoeprint:2024/222,2024,Cryptography,Factoring,0,762,1700,68719476736,false,Both
+Analyzing Prospects for Quantum Advantage in Topological Data Analysis,arXiv:2209.13581,2022,Machine learning,Topological data analysis,0,701,100,100000000,false,Classically intractable
+Applications and resource estimates for open system simulation on a quantum computer,arXiv:2406.06281,2024,Physics simulation,Quantum dynamics,0,774,3000,270000000000000,false,Both
+Quantifying fault tolerant simulation of strongly correlated systems using the Fermi-Hubbard model,arXiv:2406.06511,2024,Physics simulation,Quantum chemistry,0,773,400,3000000,false,Both
+Prospects for NMR Spectral Prediction on Fault-Tolerant Quantum Computers,arXiv:2406.09340,2024,Physics simulation,Quantum chemistry,0,772,256,579000000000,false,Both
+QREChem: Quantum Resource Estimation Software for Chemistry Applications,arXiv:2404.16351,2024,Physics simulation,Quantum chemistry,0,791,300000,1000000000000000,false,Both
+The electronic complexity of the ground-state of the FeMo cofactor of nitrogenase as relevant to quantum simulations,doi:10.1063/1.5063376,2024,Physics simulation,Quantum chemistry,228,801,1972,14000000000000,false,Both
+Quantum-Centric Algorithm for Sample-Based Krylov Diagonalization,arXiv:2501.09702,2025,Physics simulation,Krylov Diagonalization Anderson Model,47,827,85,6000,true,Other
+Faster quantum chemistry simulations on a quantum computer with improved tensor factorization and active volume compilation,arXiv:2501.06165,2025,Physics simulation,Quantum chemisty,228,826,999,1700000000,false,Both
+Quantum resource estimates for computing binary elliptic curve discrete logarithms,arXiv:2503.02984,2025,Cryptography,ECC-163,228,829,2125,1370000,false,Both
+Quantum resource estimates for computing binary elliptic curve discrete logarithms,arXiv:2503.02984,2025,Cryptography,ECC-233,228,829,3035,3520000,false,Both
+Fast quantum simulation of electronic structure by spectrum amplification,arXiv:2502.15882,2025,Physics simulation,FeMoco-54,228,830,1137,341000000,false,Both
+Fast quantum simulation of electronic structure by spectrum amplification,arXiv:2502.15882,2025,Physics simulation,FeMoco-76,228,830,1459,999000000,false,Both
+How to factor 2048 bit RSA integers with less than a million noisy qubits,arXiv:2505.15917,2025,Cryptography,Factoring,0,840,897864,10000000000,false,Both
+How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits,"Quantum 5, 433 (2021) volume5, page 433",2021,Cryptography,Factoring,0,761,20000000,2700000000,false,Both
