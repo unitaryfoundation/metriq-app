@@ -5,6 +5,7 @@
 import React from 'react'
 import { Chart, LinearScale, LogarithmicScale, TimeScale, CategoryScale, PointElement, LineElement, BarElement, ScatterController, BarController, Tooltip } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import 'chartjs-chart-box-and-violin-plot'
 import moment from 'moment'
 import 'chartjs-adapter-moment'
 import axios from 'axios'
@@ -17,6 +18,7 @@ import { Link } from 'react-router-dom'
 
 const chartComponents = [LinearScale, LogarithmicScale, TimeScale, CategoryScale, PointElement, LineElement, BarElement, ScatterController, BarController, Tooltip, ChartDataLabels]
 Chart.register(chartComponents)
+Chart.register(require('chartjs-chart-box-and-violin-plot'))
 Chart.defaults.font.size = 13
 const chart = null
 
@@ -45,7 +47,8 @@ class SotaChart extends React.Component {
       isSubset: true,
       label: 'arXiv',
       isSotaLineVisible: true,
-      isSotaLabelVisible: true
+      isSotaLabelVisible: true,
+      chartType: props.chartType || 'default' // 'default', 'boxplot'
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.loadChartFromState = this.loadChartFromState.bind(this)
@@ -224,6 +227,25 @@ class SotaChart extends React.Component {
     })
   }
 
+  handleChartTypeChange (chartType) {
+    this.setState({ chartType })
+    this.loadChartFromState({
+      subset: this.state.subset,
+      label: this.state.label,
+      metricNames: this.state.metricNames,
+      chartKey: this.state.chartKey,
+      chartData: this.state.chartData,
+      isLowerBetterDict: this.state.isLowerBetterDict,
+      isLog: this.state.isLog,
+      logBase: this.state.logBase,
+      log: this.state.log,
+      isSotaLineVisible: this.state.isSotaLineVisible,
+      isSotaLabelVisible: this.state.isSotaLabelVisible,
+      subsetDataSetsActive: this.state.subsetDataSetsActive,
+      chartType
+    })
+  }
+
   loadChartFromState (state) {
     const isLowerBetter = state.isLowerBetterDict[state.chartKey]
     const d = [...state.chartData[state.chartKey]]
@@ -260,8 +282,66 @@ class SotaChart extends React.Component {
       highest = state.log(highest)
     }
 
+    const dateGroups = {}
+    if (state.chartType === 'boxplot' && !isSameDate) {
+      for (const item of d) {
+        const dateStr = moment(item.label).format('YYYY-MM-DD')
+        if (!dateGroups[dateStr]) {
+          dateGroups[dateStr] = []
+        }
+        dateGroups[dateStr].push(item)
+      }
+    }
+
     let data = {}
-    if (isSameDate) {
+    let chartType = isSameDate ? 'bar' : undefined
+    
+    if (state.chartType === 'boxplot' && !isSameDate) {
+      chartType = 'boxplot'
+      const boxplotData = {
+        labels: Object.keys(dateGroups).sort(),
+        datasets: []
+      }
+      
+      const boxplotDataset = {
+        label: state.chartKey,
+        backgroundColor: 'rgba(60, 210, 249, 0.5)',
+        borderColor: 'rgb(60, 210, 249)',
+        borderWidth: 1,
+        outlierColor: '#999999',
+        padding: 10,
+        itemRadius: 2,
+        data: []
+      }
+      
+      for (const dateStr of boxplotData.labels) {
+        const values = dateGroups[dateStr].map(item => 
+          (state.isLog && canLog) ? state.log(item.value) : item.value
+        )
+        
+        if (values.length > 0) {
+          values.sort((a, b) => a - b)
+          
+          const min = values[0]
+          const max = values[values.length - 1]
+          const q1 = values[Math.floor(values.length * 0.25)]
+          const median = values[Math.floor(values.length * 0.5)]
+          const q3 = values[Math.floor(values.length * 0.75)]
+          
+          boxplotDataset.data.push({
+            min,
+            max,
+            q1,
+            median,
+            q3,
+            date: dateStr
+          })
+        }
+      }
+      
+      boxplotData.datasets.push(boxplotDataset)
+      data = boxplotData
+    } else if (isSameDate) {
       data = {
         datasets: [],
         labels: d.map((obj, index) => ((state.label === 'arXiv') && obj.arXivId) ? (obj.arXivId + '\n') : (obj.method + (obj.platform ? '\n' + obj.platform : '')))
@@ -481,7 +561,76 @@ class SotaChart extends React.Component {
     }
 
     let options = {}
-    if (isSameDate) {
+    if (state.chartType === 'boxplot' && !isSameDate) {
+      options = {
+        animation: this.state.chart
+          ? {
+              duration: 0
+            }
+          : undefined,
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            left: this.props.isPreview ? 0 : ((this.state.windowWidth >= 820) ? 40 : 8),
+            right: this.props.isPreview ? 0 : ((this.state.windowWidth >= 820) ? 100 : 16)
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            title: {
+              display: true,
+              text: this.props.xLabel ? this.props.xLabel : 'Time'
+            },
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 10
+            },
+            time: {
+              displayFormats: {
+                millisecond: 'YYYY-MM-DD',
+                second: 'YYYY-MM-DD',
+                minute: 'YYYY-MM-DD',
+                hour: 'YYYY-MM-DD',
+                day: 'YYYY-MM-DD',
+                week: 'YYYY-MM-DD',
+                month: 'YYYY-MM',
+                quarter: 'YYYY-MM',
+                year: 'YYYY'
+              }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: ((state.isLog && canLog) ? (((state.isLog > 1) ? 'Log Log ' : 'Log ') + state.logBase.toString() + ' ') : '') + (state.chartKey ? state.chartKey : 'Metric value')
+            },
+            type: (state.isLog && !canLog) ? 'logarithmic' : 'linear'
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              title: function (ctx) {
+                return moment(ctx[0].parsed.x).format('YYYY-MM-DD')
+              },
+              label: function (ctx) {
+                const item = ctx.dataset.data[ctx.dataIndex]
+                return [
+                  `Min: ${item.min}`,
+                  `Q1: ${item.q1}`,
+                  `Median: ${item.median}`,
+                  `Q3: ${item.q3}`,
+                  `Max: ${item.max}`
+                ]
+              }
+            }
+          },
+          datalabels: { display: false }
+        }
+      }
+    } else if (isSameDate) {
       options = {
         animation: this.state.chart
           ? {
@@ -620,7 +769,11 @@ class SotaChart extends React.Component {
       if (this.state.chart) {
         this.state.chart.destroy()
       }
-      const chart = new Chart(document.getElementById('sota-chart-canvas-' + this.props.chartId).getContext('2d'), { type: isSameDate ? 'bar' : undefined, data, options })
+      const chart = new Chart(document.getElementById('sota-chart-canvas-' + this.props.chartId).getContext('2d'), { 
+        type: chartType, 
+        data, 
+        options 
+      })
       this.setState({ chart, subsetDataSets })
     }
     chartFunc()
@@ -656,6 +809,15 @@ class SotaChart extends React.Component {
         aid = (parts[parts.length - 1] === '') ? parts[parts.length - 2] : parts[parts.length - 1]
         aid = 'arXiv:' + aid
       }
+      
+      const boxPlotStats = {
+        min: row.metricMin !== undefined ? row.metricMin : row.metricValue,
+        max: row.metricMax !== undefined ? row.metricMax : row.metricValue,
+        q1: row.metricQ1 !== undefined ? row.metricQ1 : row.metricValue,
+        median: row.metricMedian !== undefined ? row.metricMedian : row.metricValue,
+        q3: row.metricQ3 !== undefined ? row.metricQ3 : row.metricValue
+      }
+      
       return {
         method: row.methodName,
         platform: row.platformName,
@@ -667,7 +829,8 @@ class SotaChart extends React.Component {
         standardError: row.standardError,
         qubitCount: row.qubitCount,
         circuitDepth: row.circuitDepth,
-        submissionId: row.submissionId
+        submissionId: row.submissionId,
+        ...boxPlotStats
       }
     })
 
@@ -922,6 +1085,17 @@ class SotaChart extends React.Component {
                     method: 'Method and platform'
                   }}
                   onChange={this.handleOnChangeLabel}
+                />
+                <SotaControlRow
+                  name='chartTypeOption'
+                  label='Chart type:'
+                  value={this.state.chartType}
+                  options={{
+                    default: 'Default',
+                    boxplot: 'Box Plot'
+                  }}
+                  onChange={e => this.handleChartTypeChange(e.target.value)}
+                  tooltip='Select chart visualization type'
                 />
                 <div className='row sota-checkbox-row' style={{ paddingTop: '32px' }}>
                   <div className='col-10 text-start sota-label'>
