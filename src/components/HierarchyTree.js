@@ -19,19 +19,20 @@ const HierarchyTree = ({
 
     // Set up dimensions with dynamic sizing
     const margin = { top: 20, right: 120, bottom: 30, left: 120 };
-    const width = svgRef.current.clientWidth - margin.left - margin.right;
-    const height = svgRef.current.clientHeight - margin.top - margin.bottom;
+    const width = 1000; // Set a default width
+    const height = 800; // Set a default height
 
     // Create the SVG container with zoom support
     const svg = d3
       .select(svgRef.current)
       .attr("width", "100%")
       .attr("height", "100%")
+      .attr("preserveAspectRatio", "xMidYMid meet")
       .attr(
         "viewBox",
         [
-          0,
-          0,
+          -margin.left,
+          -margin.top,
           width + margin.left + margin.right,
           height + margin.top + margin.bottom,
         ].join(" ")
