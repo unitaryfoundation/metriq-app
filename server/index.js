@@ -77,6 +77,17 @@ app.get('*', (req, res, next) => {
           title = response.name
           description = response.description
         }))
+    } else if (req.url.startsWith('/User/')) {
+      const id = truncateBefore(req.url, '/User/')
+      if (!id.includes('/')) {
+        const route = config.api.getUriPrefix() + '/user/' + id
+        await (axios.get(route)
+          .then(subRes => {
+            const response = subRes.data.data
+            title = response.name
+            description = response.affiliation || ''
+          }))
+      }
     }
     if (title.length > 50) {
       title = title.substring(0, 47) + '...'

@@ -716,3 +716,20 @@ iframe {
   left: 8px;
   transform: rotate(135deg);
 }
+
+
+.user-activity-tabs {
+  border-bottom: 2px solid #04165D;
+}
+.user-activity-tabs .nav-link {
+  border: 2px solid #04165D;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  margin-right: 4px;
+  color: #04165D;
+  font-weight: 600;
+}
+.user-activity-tabs .nav-link.active {
+  background-color: #04165D;
+  color: #ffffff !important;
+}

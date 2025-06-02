@@ -17,6 +17,7 @@ import AddSubmission from './views/AddSubmission'
 import MySubmissions from './views/MySubmissions'
 import MyFollows from './views/MyFollows'
 import SubmissionsPublic from './views/SubmissionsPublic'
+import UserProfile from './views/UserProfile'
 import Token from './views/Token'
 import Password from './views/Password'
 import Methods from './views/Methods'
@@ -272,6 +273,11 @@ const MainRouter = (props) => {
           exact
           path='/Submission/:id'
           render={(p) => <Submission {...p} isLoggedIn={isLoggedIn} onLogin={handleLogin} />}
+        />
+        <Route
+          exact
+          path='/User/:userId'
+          render={(p) => <UserProfile {...p} isLoggedIn={isLoggedIn} onLogin={handleLogin} />}
         />
         <Route
           exact
