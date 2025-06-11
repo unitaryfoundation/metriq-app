@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 
 const chartComponents = [LinearScale, LogarithmicScale, TimeScale, CategoryScale, PointElement, LineElement, BarElement, ScatterController, BarController, Tooltip, ChartDataLabels]
 Chart.register(chartComponents)
-Chart.register(require('chartjs-chart-box-and-violin-plot')) // Registered box plot controller
+Chart.register(require('chartjs-chart-box-and-violin-plot'))
 Chart.defaults.font.size = 13
 const chart = null
 
