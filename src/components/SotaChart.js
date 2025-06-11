@@ -42,7 +42,7 @@ class SotaChart extends React.Component {
       isSotaLabelVisible: true,
       subsetDataSetsActive: {},
       isSameDate: false,
-      chartType: props.chartType || 'default' // Initialized chartType
+      chartType: props.chartType || 'default'
     }
 
     this.chart = null
