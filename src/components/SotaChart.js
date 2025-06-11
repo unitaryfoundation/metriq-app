@@ -5,7 +5,7 @@
 import React from 'react'
 import { Chart, LinearScale, LogarithmicScale, TimeScale, CategoryScale, PointElement, LineElement, BarElement, ScatterController, BarController, Tooltip } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import 'chartjs-chart-box-and-violin-plot' // Added import for box plot
+import 'chartjs-chart-box-and-violin-plot'
 import moment from 'moment'
 import 'chartjs-adapter-moment'
 import axios from 'axios'
