@@ -16,7 +16,11 @@ const MyFollows = () => {
   useEffect(() => {
     axios.get(config.api.getUriPrefix() + '/user/follows/tasks')
       .then(res => {
-        setTasks(res.data.data)
+        const followedTasks = res.data.data.map((task) => ({
+          ...task,
+          isSubscribed: true
+        }))
+        setTasks(followedTasks)
         setRequestFailedMessage('')
       })
       .catch(err => {
