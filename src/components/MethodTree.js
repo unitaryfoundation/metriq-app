@@ -1,60 +1,79 @@
-import React from 'react'
-import axios from 'axios'
-import config from '../config'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import '../tree.css'
+import React from 'react';
+import axios from 'axios';
+import config from '../config';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import '../tree.css';
 
+/* ------------------------------------------------------------------ */
+/*  Recursive tree node                                               */
+/* ------------------------------------------------------------------ */
 const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
-  const [expanded, setExpanded] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
-  const [children, setChildren] = React.useState(null) // null means not loaded
+  const [expanded, setExpanded] = React.useState(false);
+  const [loading,  setLoading]  = React.useState(false);
+  const [children, setChildren] = React.useState(null);   // null = not fetched
 
+  const hasPotentialKids = children === null;             // might have children
+  const hasLoadedKids    = children && children.length > 0;
+  const isExpandable     = hasPotentialKids || hasLoadedKids;
+
+  /* --- Toggle handler --------------------------------------------- */
   const toggle = () => {
-    if (!expanded) {
-      if (children === null) {
-        setLoading(true)
-        axios.get(`${config.api.getUriPrefix()}/method/${item.id}`)
-          .then(res => {
-            const method = res.data.data || res.data.body || {}
-            setChildren(method.childMethods || [])
-            setExpanded(true)
-          })
-          .catch(() => {
-            setChildren([])
-          })
-          .finally(() => setLoading(false))
-      } else {
-        setExpanded(true)
-      }
-    } else {
-      setExpanded(false)
-    }
-  }
+    if (!isExpandable) return;          // ignore clicks on true leaves
 
-  const prefixParts = []
-  ancestorLast.forEach(last => {
-    prefixParts.push(last ? '    ' : '│   ')
-  })
+    /* expand ------------------------------------------------------- */
+    if (!expanded) {
+      // first time we click a still‑unloaded node -> fetch children
+      if (children === null) {
+        setLoading(true);
+        axios
+          .get(`${config.api.getUriPrefix()}/method/${item.id}`)
+          .then(res => {
+            const method = res.data.data || res.data.body || {};
+            setChildren(Array.isArray(method.childMethods) ? method.childMethods : []);
+            setExpanded(true);
+          })
+          .catch(() => setChildren([])) // treat error as “no kids”
+          .finally(() => setLoading(false));
+      } else {
+        setExpanded(true);
+      }
+    /* collapse ----------------------------------------------------- */
+    } else {
+      setExpanded(false);
+    }
+  };
+
+  /* --- Build ASCII prefix (│ ├── └──) ----------------------------- */
+  const parts = ancestorLast.map(last => (last ? '    ' : '│   '));
   if (level > 0) {
-    prefixParts.push(isLast ? '└── ' : '├── ')
+    parts.push(isLast ? '└── ' : '├── ');
   }
-  const prefix = prefixParts.join('')
+  const prefix = parts.join('').replace(/ /g, '\u00A0');   // keep spaces
 
   return (
-    <li className='tree-node' style={{ paddingLeft: `${level * 20}px` }}>
-      {((children === null) || (children && children.length > 0)) && (
-        <span className='tree-toggle' onClick={toggle} role='button'>
-          {expanded ? '▼' : '▶'}
+    <li className="tree-node">
+      {/*   + / − toggle or blank spacer                               */}
+      {isExpandable ? (
+        <span className="tree-toggle" onClick={toggle}>
+          {expanded ? '−' : '+'}
         </span>
+      ) : (
+        <span className="tree-toggle-placeholder" />
       )}
-      {(children !== null && children.length === 0) && (
-        <span className='tree-toggle-placeholder' />
-      )}
-      <span className='tree-prefix'>{prefix}</span>
-      <Link className='tree-label' to={`/Method/${item.id}`}>{item.name}</Link>
-      {loading && <span className='tree-loading'> loading...</span>}
-      {expanded && children.length > 0 && (
+
+      {/*   ASCII lines                                               */}
+      <span className="tree-prefix">{prefix}</span>
+
+      {/*   Clickable method name                                     */}
+      <Link className="tree-label" to={`/Method/${item.id}`}>
+        {item.name}
+      </Link>
+
+      {loading && <span className="tree-loading"> loading…</span>}
+
+      {/*   Recursively render children                               */}
+      {expanded && hasLoadedKids && (
         <ul>
           {children.map((child, idx) => (
             <TreeNode
@@ -68,35 +87,41 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
         </ul>
       )}
     </li>
-  )
-}
+  );
+};
 
 TreeNode.propTypes = {
   item: PropTypes.object.isRequired,
   level: PropTypes.number,
   isLast: PropTypes.bool,
   ancestorLast: PropTypes.array
-}
+};
 
+/* ------------------------------------------------------------------ */
+/*  Top‑level MethodTree component                                    */
+/* ------------------------------------------------------------------ */
 const MethodTree = () => {
-  const [roots, setRoots] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  const [roots,   setRoots]   = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    axios.get(`${config.api.getUriPrefix()}/method/submissionCount`)
+    axios
+      .get(`${config.api.getUriPrefix()}/method/submissionCount`)
       .then(res => {
-        setRoots(res.data.data || [])
-        setLoading(false)
+        const data = res.data.data || res.data.body || [];
+        setRoots(Array.isArray(data) ? data : []);
       })
-      .catch(() => setLoading(false))
-  }, [])
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <div className='method-tree'>
+    <div className="method-tree">
       <h4>Method Hierarchy</h4>
-      {loading && <p>Loading hierarchy...</p>}
+
+      {loading && <p>Loading hierarchy…</p>}
+
       {!loading && (
-        <ul className='tree-root'>
+        <ul className="tree-root">
           {roots.map((root, idx) => (
             <TreeNode
               key={root.id}
@@ -109,7 +134,7 @@ const MethodTree = () => {
         </ul>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MethodTree
+export default MethodTree;

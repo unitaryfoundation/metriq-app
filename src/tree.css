@@ -1,45 +1,62 @@
+/* tree.css — Linux‑tree‑style rendering
+   ------------------------------------ */
+
 .method-tree {
   margin-top: 20px;
 }
-.tree-root {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
-}
+
+/* Root list and every nested <ul> */
+.tree-root,
 .tree-root ul {
-  list-style: none;
-  margin-left: 20px;
-  padding-left: 0;
-  position: relative;
+  list-style: none;   /* no bullets */
+  margin: 0;          /* no extra vertical gap */
+  padding: 0;         /* indentation handled by ASCII prefix */
 }
+
+/* Remove the dotted vertical guide that caused mis‑alignment */
 .tree-root ul::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  border-left: 1px dotted #999;
+  content: none;
 }
+
+/* Each node line */
 .tree-node {
   margin: 4px 0;
-  position: relative;
+  font-family: monospace;  /* makes the ASCII lines line‑up */
 }
+
+/* The printable ASCII prefix (│, ├──, └──) */
 .tree-prefix {
-  white-space: pre;
-  font-family: monospace;
+  white-space: pre;        /* keep spaces exactly as typed */
+  cursor: pointer;         /* becomes a hand only on expandable nodes
+                              (set inline in JS) */
+  user-select: none;       /* avoid accidental text selection */
 }
-.tree-toggle {
-  cursor: pointer;
-  margin-right: 4px;
-}
+
+/* Clickable label */
 .tree-label {
   text-decoration: none;
+  margin-left: 4px;        /* small gap after the prefix */
 }
+
+/* Loading indicator */
 .tree-loading {
-  margin-left: 5px;
+  margin-left: 6px;
   font-style: italic;
+  font-family: system-ui, sans-serif;
 }
-.tree-node-empty {
-  color: #666;
-  font-style: italic;
+
+/* clickable + / − control */
+.tree-toggle {
+  display: inline-block;
+  width: 14px;           /* keeps all rows vertically aligned */
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* invisible spacer for true leaves */
+.tree-toggle-placeholder {
+  display: inline-block;
+  width: 14px;
 }
