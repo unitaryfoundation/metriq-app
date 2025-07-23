@@ -11,6 +11,7 @@ import ViewHeader from '../components/ViewHeader'
 import { sortCommon, sortPopular, sortAlphabetical } from '../components/SortFunctions'
 import { withRouter } from 'react-router-dom'
 import ViewSubHeader from '../components/ViewSubHeader'
+import MethodTree from '../components/MethodTree'
 
 class Methods extends React.Component {
   constructor (props) {
@@ -102,6 +103,9 @@ class Methods extends React.Component {
             </Tab>
             <Tab eventKey='alphabetical' title='Alphabetical'>
               <CategoryScroll type='method' isLoading={this.state.isLoading} items={this.state.alphabetical} isLoggedIn={this.props.isLoggedIn} heading='Sorted alphabetically' />
+            </Tab>
+            <Tab eventKey='hierarchy' title='Hierarchy'>
+              <MethodTree />
             </Tab>
           </Tabs>
         </div>

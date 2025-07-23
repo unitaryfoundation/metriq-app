@@ -120,3 +120,8 @@ the local instance of the database with the data from the
 Following the instructions in the `README.md` file of the `metriq-postgres` repo will
 populate your local instance of the database with dummy data from the `.JSON`
 files.
+
+## Hierarchy visualization
+
+The methods view now includes an interactive tree that reveals parent and child methods without leaving the page. Top-level methods are loaded from `/method/submissionCount` and child nodes are fetched on demand from `/method/:id`. Use the arrow to expand a node and click the method name to navigate to its detail page. The component requests data from the API so newly created methods appear automatically.
+

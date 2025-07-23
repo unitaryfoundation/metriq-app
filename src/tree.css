@@ -1,0 +1,28 @@
+.method-tree {
+  margin-top: 20px;
+}
+.tree-root,
+.tree-root ul {
+  list-style: none;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 1px dotted #999;
+}
+.tree-node {
+  margin: 4px 0;
+}
+.tree-toggle {
+  cursor: pointer;
+  margin-right: 4px;
+}
+.tree-label {
+  text-decoration: none;
+}
+.tree-loading {
+  margin-left: 5px;
+  font-style: italic;
+}
+.tree-node-empty {
+  color: #666;
+  font-style: italic;
+}
