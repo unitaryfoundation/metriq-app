@@ -1,15 +1,32 @@
 .method-tree {
   margin-top: 20px;
 }
-.tree-root,
+.tree-root {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
 .tree-root ul {
   list-style: none;
   margin-left: 20px;
-  padding-left: 10px;
+  padding-left: 0;
+  position: relative;
+}
+.tree-root ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
   border-left: 1px dotted #999;
 }
 .tree-node {
   margin: 4px 0;
+  position: relative;
+}
+.tree-prefix {
+  white-space: pre;
+  font-family: monospace;
 }
 .tree-toggle {
   cursor: pointer;

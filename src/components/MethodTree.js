@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../tree.css'
 
-const TreeNode = ({ item }) => {
+const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
   const [expanded, setExpanded] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [children, setChildren] = React.useState(null) // null means not loaded
@@ -32,8 +32,17 @@ const TreeNode = ({ item }) => {
     }
   }
 
+  const prefixParts = []
+  ancestorLast.forEach(last => {
+    prefixParts.push(last ? '    ' : '│   ')
+  })
+  if (level > 0) {
+    prefixParts.push(isLast ? '└── ' : '├── ')
+  }
+  const prefix = prefixParts.join('')
+
   return (
-    <li className='tree-node'>
+    <li className='tree-node' style={{ paddingLeft: `${level * 20}px` }}>
       {((children === null) || (children && children.length > 0)) && (
         <span className='tree-toggle' onClick={toggle} role='button'>
           {expanded ? '▼' : '▶'}
@@ -42,12 +51,19 @@ const TreeNode = ({ item }) => {
       {(children !== null && children.length === 0) && (
         <span className='tree-toggle-placeholder' />
       )}
+      <span className='tree-prefix'>{prefix}</span>
       <Link className='tree-label' to={`/Method/${item.id}`}>{item.name}</Link>
       {loading && <span className='tree-loading'> loading...</span>}
       {expanded && children.length > 0 && (
         <ul>
-          {children.map(child => (
-            <TreeNode key={child.id} item={child} />
+          {children.map((child, idx) => (
+            <TreeNode
+              key={child.id}
+              item={child}
+              level={level + 1}
+              isLast={idx === children.length - 1}
+              ancestorLast={[...ancestorLast, isLast]}
+            />
           ))}
         </ul>
       )}
@@ -56,7 +72,10 @@ const TreeNode = ({ item }) => {
 }
 
 TreeNode.propTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  level: PropTypes.number,
+  isLast: PropTypes.bool,
+  ancestorLast: PropTypes.array
 }
 
 const MethodTree = () => {
@@ -78,8 +97,14 @@ const MethodTree = () => {
       {loading && <p>Loading hierarchy...</p>}
       {!loading && (
         <ul className='tree-root'>
-          {roots.map(root => (
-            <TreeNode key={root.id} item={root} />
+          {roots.map((root, idx) => (
+            <TreeNode
+              key={root.id}
+              item={root}
+              level={0}
+              isLast={idx === roots.length - 1}
+              ancestorLast={[]}
+            />
           ))}
         </ul>
       )}
