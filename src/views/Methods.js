@@ -11,7 +11,7 @@ import ViewHeader from '../components/ViewHeader'
 import { sortCommon, sortPopular, sortAlphabetical } from '../components/SortFunctions'
 import { withRouter } from 'react-router-dom'
 import ViewSubHeader from '../components/ViewSubHeader'
-import MethodTree from '../components/MethodTree'
+import MethodTree from '../components/TreeView'
 
 class Methods extends React.Component {
   constructor (props) {
