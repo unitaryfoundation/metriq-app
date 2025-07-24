@@ -8,7 +8,7 @@ import '../tree.css';
 /* ------------------------------------------------------------------ */
 /*  Recursive tree node                                               */
 /* ------------------------------------------------------------------ */
-const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
+const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [], type = 'method' }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [loading,  setLoading]  = React.useState(false);
   const [children, setChildren] = React.useState(null);   // null = not fetched
@@ -27,10 +27,11 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
       if (children === null) {
         setLoading(true);
         axios
-          .get(`${config.api.getUriPrefix()}/method/${item.id}`)
+          .get(`${config.api.getUriPrefix()}/${type}/${item.id}`)
           .then(res => {
-            const method = res.data.data || res.data.body || {};
-            setChildren(Array.isArray(method.childMethods) ? method.childMethods : []);
+            const data = res.data.data || res.data.body || {};
+            const childKey = type === 'task' ? 'childTasks' : 'childMethods';
+            setChildren(Array.isArray(data[childKey]) ? data[childKey] : []);
             setExpanded(true);
           })
           .catch(() => setChildren([])) // treat error as “no kids”
@@ -64,7 +65,7 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
       <span className="tree-prefix">{prefix}</span>
 
       {/*   Clickable method name                                     */}
-      <Link className="tree-label" to={`/Method/${item.id}`}>
+      <Link className="tree-label" to={`/${type.charAt(0).toUpperCase() + type.slice(1)}/${item.id}`}>
         {item.name}
       </Link>
 
@@ -80,6 +81,7 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
               level={level + 1}
               isLast={idx === children.length - 1}
               ancestorLast={[...ancestorLast, isLast]}
+              type={type}
             />
           ))}
         </ul>
@@ -98,13 +100,13 @@ TreeNode.propTypes = {
 /* ------------------------------------------------------------------ */
 /*  Top‑level MethodTree component                                    */
 /* ------------------------------------------------------------------ */
-const MethodTree = () => {
+const MethodTree = ({ type = 'method' }) => {
   const [roots,   setRoots]   = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     axios
-      .get(`${config.api.getUriPrefix()}/method/submissionCount`)
+      .get(`${config.api.getUriPrefix()}/${type}/submissionCount`)
       .then(res => {
         const data = res.data.data || res.data.body || [];
         setRoots(Array.isArray(data) ? data : []);
@@ -114,7 +116,7 @@ const MethodTree = () => {
 
   return (
     <div className="method-tree">
-      <h4>Method Hierarchy</h4>
+      <h4>{type === 'task' ? 'Task Hierarchy' : 'Method Hierarchy'}</h4>
 
       {loading && <p>Loading hierarchy…</p>}
 
@@ -127,12 +129,17 @@ const MethodTree = () => {
               level={0}
               isLast={idx === roots.length - 1}
               ancestorLast={[]}
+              type={type}
             />
           ))}
         </ul>
       )}
     </div>
   );
+};
+
+MethodTree.propTypes = {
+  type: PropTypes.string
 };
 
 export default MethodTree;
