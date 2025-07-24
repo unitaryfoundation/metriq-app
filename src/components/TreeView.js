@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../tree.css';
 
-/* ------------------------------------------------------------------ */
-/*  Recursive tree node                                               */
-/* ------------------------------------------------------------------ */
+
+// Recursive tree node
 const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [], type = 'method' }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [loading,  setLoading]  = React.useState(false);
@@ -17,11 +16,11 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [], type = '
   const hasLoadedKids    = children && children.length > 0;
   const isExpandable     = hasPotentialKids || hasLoadedKids;
 
-  /* --- Toggle handler --------------------------------------------- */
+  // Toggle handler
   const toggle = () => {
     if (!isExpandable) return;          // ignore clicks on true leaves
 
-    /* expand ------------------------------------------------------- */
+    // expand
     if (!expanded) {
       // first time we click a still‑unloaded node -> fetch children
       if (children === null) {
@@ -39,13 +38,13 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [], type = '
       } else {
         setExpanded(true);
       }
-    /* collapse ----------------------------------------------------- */
+    // collapse
     } else {
       setExpanded(false);
     }
   };
 
-  /* --- Build ASCII prefix (│ ├── └──) ----------------------------- */
+  // Build ASCII prefix (│ ├── └──)
   const parts = ancestorLast.map(last => (last ? '    ' : '│   '));
   parts.push(isLast ? '└── ' : '├── ');
   const prefix = parts.join('').replace(/ /g, '\u00A0');   // keep spaces
@@ -97,9 +96,8 @@ TreeNode.propTypes = {
   ancestorLast: PropTypes.array
 };
 
-/* ------------------------------------------------------------------ */
-/*  Top‑level MethodTree component                                    */
-/* ------------------------------------------------------------------ */
+
+// Top‑level MethodTree component
 const MethodTree = ({ type = 'method' }) => {
   const [roots,   setRoots]   = React.useState([]);
   const [loading, setLoading] = React.useState(true);
