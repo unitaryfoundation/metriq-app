@@ -8,6 +8,7 @@ import CategoryScroll from '../components/CategoryScroll'
 import FormFieldAlertRow from '../components/FormFieldAlertRow'
 import FormFieldWideRow from '../components/FormFieldWideRow'
 import ViewHeader from '../components/ViewHeader'
+import MethodTree from '../components/TreeView'
 import { sortAlphabetical } from '../components/SortFunctions'
 import { withRouter } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -89,6 +90,8 @@ class Tasks extends React.Component {
         <FormFieldWideRow className='centered-tabs'>
           <CategoryScroll className='col-lg-9 col' type='task' isLoading={this.state.isLoading} items={this.state.alphabetical} isLoggedIn={this.props.isLoggedIn} heading='Top-level task categories' />
         </FormFieldWideRow>
+        <br />
+        <MethodTree type='task' />
         <br />
         <FormFieldAlertRow>
           <FormFieldValidator invalid={!!this.state.requestFailedMessage} message={this.state.requestFailedMessage} />
