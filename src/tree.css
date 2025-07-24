@@ -1,5 +1,4 @@
-/* tree.css — Linux‑tree‑style rendering
-   ------------------------------------ */
+/* tree.css — Linux‑tree‑style rendering */
 
 .method-tree {
   margin-top: 20px;
@@ -50,15 +49,9 @@
 .tree-toggle,
 .tree-toggle-placeholder {
   display: inline-block;
-  width: 1ch;                /* exactly one character – no shifting      */
+  width: 14px;
   text-align: center;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
-}
-
-/* invisible spacer for true leaves */
-.tree-toggle-placeholder {
-  display: inline-block;
-  width: 14px;
 }
