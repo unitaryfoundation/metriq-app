@@ -3,6 +3,7 @@
 
 .method-tree {
   margin-top: 20px;
+  text-align: left; 
 }
 
 /* Root list and every nested <ul> */
@@ -46,9 +47,10 @@
 }
 
 /* clickable + / − control */
-.tree-toggle {
+.tree-toggle,
+.tree-toggle-placeholder {
   display: inline-block;
-  width: 14px;           /* keeps all rows vertically aligned */
+  width: 1ch;                /* exactly one character – no shifting      */
   text-align: center;
   font-weight: bold;
   cursor: pointer;

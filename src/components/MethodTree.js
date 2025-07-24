@@ -46,9 +46,7 @@ const TreeNode = ({ item, level = 0, isLast = false, ancestorLast = [] }) => {
 
   /* --- Build ASCII prefix (│ ├── └──) ----------------------------- */
   const parts = ancestorLast.map(last => (last ? '    ' : '│   '));
-  if (level > 0) {
-    parts.push(isLast ? '└── ' : '├── ');
-  }
+  parts.push(isLast ? '└── ' : '├── ');
   const prefix = parts.join('').replace(/ /g, '\u00A0');   // keep spaces
 
   return (
