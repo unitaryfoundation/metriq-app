@@ -1,6 +1,6 @@
-a:link
-{
-    text-decoration: none !important;;
+a:link {
+  text-decoration: none !important;
+  ;
 }
 
 .App {
@@ -8,7 +8,7 @@ a:link
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.centered-tabs > nav {
+.centered-tabs>nav {
   display: flex;
   flex-direction: row;
   /* justify-content: center; */
@@ -16,7 +16,7 @@ a:link
 
 textarea {
   border: 2px solid;
-  padding: 20px; 
+  padding: 20px;
   width: 100%;
   resize: both;
   overflow: auto;
@@ -41,23 +41,27 @@ textarea {
 .main-search-bar {
   display: inline-block;
   padding-top: 8px;
-  width: 192px;
+  width: 200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
 
+.main-search-bar input {
+  line-height: 1;
+}
+
 @media only screen and (max-width: 448px) {
   .metriq-header {
-      display: none;
+    display: none;
   }
 }
 
 .metriq-navbar {
   background-color: #3cd2f9;
   font-family: 'Arial', sans-serif;
-  color:white;
+  color: white;
   font-weight: bold;
   font-size: 0.875rem
 }
@@ -77,11 +81,11 @@ textarea {
 .metriq-navbar.navbar {
   padding-top: 0;
   padding-bottom: 0;
+  height: 60px;
 }
 
 .metriq-navbar-right {
-  margin-top: 16px;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: 0;
 }
 
@@ -117,7 +121,8 @@ textarea {
   border: none;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
   border-radius: 16px;
   border: none;
 }
@@ -133,9 +138,9 @@ textarea {
 }
 
 .navbar-nav .metriq-navbar-text.nav-link {
-    padding-top: 0.6rem;
-    color: #FFFFFF;
-    font-weight: bold;
+  padding-top: 0.6rem;
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
 .navbar-nav .metriq-navbar-text.nav-item {
@@ -156,7 +161,7 @@ textarea {
   font-weight: bold;
 }
 
-.show > #metriq-navbar-dropdown.active {
+.show>#metriq-navbar-dropdown.active {
   padding-top: 0.2rem;
   color: #000000;
   font-weight: bold;
@@ -177,20 +182,21 @@ textarea {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-form > div.row {
+form>div.row {
   padding: 5px 0 5px 0;
 }
 
-form > .row > label {
+form>.row>label {
   text-align: right;
 }
 
-form > span > .row > label {
+form>span>.row>label {
   text-align: right;
 }
 
@@ -202,13 +208,12 @@ form > span > .row > label {
   text-decoration: solid;
 }
 
-.task-card-text
-{
-    text-align: left;
+.task-card-text {
+  text-align: left;
 }
 
 .task-card-link:hover {
-  box-shadow: 0 6px 32px rgba(33,33,33,.2);
+  box-shadow: 0 6px 32px rgba(33, 33, 33, .2);
 }
 
 .active-dropdown-navlink {
@@ -225,18 +230,16 @@ form > span > .row > label {
 }
 
 .form-field-validator {
-  display: inline;
+  /* doesn't seem like this is ever activated */
+  display: hidden;
   color: red;
   padding-left: 5px;
 }
 
 .logo-image {
   display: inline-block;
-  width: 140px;
-  height: auto;
-  max-width: 180px;
-  max-height: 180px;
-  padding: 12px;
+  width: 120px;
+  padding: 8px;
 }
 
 .view-header {
@@ -263,13 +266,13 @@ input[type="range"] {
 
 .task {
   padding: 32px;
-  box-shadow: 0 3px 12px rgba(33,33,33,.2);
+  box-shadow: 0 3px 12px rgba(33, 33, 33, .2);
 }
 
 .sota-card {
   width: 100%;
   padding: 24px 15px 24px 15px;
-  box-shadow: 0 3px 12px rgba(33,33,33,.2);
+  box-shadow: 0 3px 12px rgba(33, 33, 33, .2);
 }
 
 .sota-button {
@@ -297,11 +300,11 @@ input[type="range"] {
 
 .submission-shadow {
   border-radius: 16px;
-  box-shadow: 0 3px 12px rgba(33,33,33,.2);
+  box-shadow: 0 3px 12px rgba(33, 33, 33, .2);
 }
 
 .submission-shadow:hover {
-  box-shadow: 0 3px 16px rgba(33,33,33,.2);
+  box-shadow: 0 3px 16px rgba(33, 33, 33, .2);
 }
 
 .category-item-box {
@@ -401,7 +404,7 @@ input[type="range"] {
 
 .top-submitters-card {
   padding: 8px 16px 8px 16px;
-  box-shadow: 0 3px 12px rgba(33,33,33,.2);
+  box-shadow: 0 3px 12px rgba(33, 33, 33, .2);
 }
 
 .submission-detail-image {
@@ -484,14 +487,19 @@ input[type="range"] {
   width: 100%;
 }
 
-.detail-table td, #customers th {
+.detail-table td,
+#customers th {
   border: 1px solid #ddd;
   padding: 12px;
 }
 
-.detail-table tr:nth-child(even){background-color: #f2f2f2;}
+.detail-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-.detail-table tr:hover {background-color: #ddd;}
+.detail-table tr:hover {
+  background-color: #ddd;
+}
 
 .detail-table th {
   padding-top: 12px;
@@ -556,19 +564,22 @@ input[type="range"] {
   accent-color: #1763E8;
 }
 
-input[type=checkbox]
-{
+input[type=checkbox] {
   /* Double-sized Checkboxes */
-  -ms-transform: scale(2); /* IE */
-  -moz-transform: scale(2); /* FF */
-  -webkit-transform: scale(2); /* Safari and Chrome */
-  -o-transform: scale(2); /* Opera */
+  -ms-transform: scale(2);
+  /* IE */
+  -moz-transform: scale(2);
+  /* FF */
+  -webkit-transform: scale(2);
+  /* Safari and Chrome */
+  -o-transform: scale(2);
+  /* Opera */
   padding: 10px;
 }
 
 iframe {
   display: block;
-  border-style:none;
+  border-style: none;
   margin-left: auto;
   margin-right: auto;
 }
@@ -593,11 +604,16 @@ iframe {
 
 /* From https://stackoverflow.com/questions/11599859/forcing-a-long-line-of-text-without-spaces-to-line-break-according-to-parent-c#answer-11599916 */
 .wrap {
-  white-space: pre-wrap;      /* CSS3 */
-  white-space: -moz-pre-wrap; /* Firefox */
-  white-space: -pre-wrap;     /* Opera <7 */
-  white-space: -o-pre-wrap;   /* Opera 7 */
-  word-wrap: break-word;      /* IE */
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
 }
 
 /** Pure CSS dot colors */
@@ -620,7 +636,8 @@ iframe {
   margin-top: 2px;
 }
 
-#heart::before, #heart::after {
+#heart::before,
+#heart::after {
   content: "";
   position: absolute;
   top: 0;
@@ -657,7 +674,8 @@ iframe {
   background-color: #3CD2F9;
 }
 
-#heart-full::before, #heart-full::after {
+#heart-full::before,
+#heart-full::after {
   content: '';
   width: 20px;
   height: 20px;
@@ -674,6 +692,7 @@ iframe {
   left: 0;
   transform: rotate(45deg);
 }
+
 #heart-full::after {
   top: 0;
   left: 10px;
@@ -695,7 +714,8 @@ iframe {
   background-color: transparent;
 }
 
-#heart-empty::before, #heart-empty::after {
+#heart-empty::before,
+#heart-empty::after {
   content: '';
   width: 20px;
   height: 20px;
@@ -711,6 +731,7 @@ iframe {
   left: -1px;
   transform: rotate(45deg);
 }
+
 #heart-empty::after {
   top: -1px;
   left: 8px;
@@ -721,6 +742,7 @@ iframe {
 .user-activity-tabs {
   border-bottom: 2px solid #04165D;
 }
+
 .user-activity-tabs .nav-link {
   border: 2px solid #04165D;
   border-bottom: none;
@@ -729,6 +751,7 @@ iframe {
   color: #04165D;
   font-weight: 600;
 }
+
 .user-activity-tabs .nav-link.active {
   background-color: #04165D;
   color: #ffffff !important;
