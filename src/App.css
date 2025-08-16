@@ -135,12 +135,22 @@ textarea {
 
 .metriq-navbar-social-icon {
   margin-top: 2px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.metriq-navbar-social-icon:hover {
+  opacity: 0.7;
 }
 
 .navbar-nav .metriq-navbar-text.nav-link {
   padding-top: 0.6rem;
   color: #FFFFFF;
   font-weight: bold;
+  transition: color .2s ease;
+}
+
+.navbar-nav .metriq-navbar-text.nav-link:hover {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .navbar-nav .metriq-navbar-text.nav-item {
