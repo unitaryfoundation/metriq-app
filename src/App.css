@@ -38,6 +38,10 @@ textarea {
   padding: 0;
 }
 
+.search-accent input:focus::placeholder {
+  opacity: 0;
+}
+
 .main-search-bar {
   display: inline-block;
   padding-top: 8px;
