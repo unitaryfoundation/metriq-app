@@ -20,7 +20,7 @@ const passwordValidRegex = /.{12,}/
 const twitterHandleValidRegex = /^$|^@?[A-Za-z0-9_]{1,15}$/
 
 class Register extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       username: '',
@@ -43,28 +43,28 @@ class Register extends React.Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this)
   }
 
-  handleOnChange (field, value) {
+  handleOnChange(field, value) {
     // parent class change handler is always called with field name and value
     this.setState({ [field]: value, isValidated: false })
   }
 
-  handleOnChangePassword (field, value) {
+  handleOnChangePassword(field, value) {
     // parent class change handler is always called with field name and value
     this.handleOnChange(field, value)
     this.setState({ isPasswordMatch: this.isPasswordMatch(value, this.state.passwordConfirm) })
   }
 
-  handleOnChangePasswordConfirm (field, value) {
+  handleOnChangePasswordConfirm(field, value) {
     // parent class change handler is always called with field name and value
     this.handleOnChange(field, value)
     this.setState({ isPasswordMatch: this.isPasswordMatch(this.state.password, value) })
   }
 
-  isPasswordMatch (password, passwordConfirm) {
+  isPasswordMatch(password, passwordConfirm) {
     return !passwordValidRegex.test(password) || (password === passwordConfirm)
   }
 
-  isAllValid () {
+  isAllValid() {
     if (!usernameValidRegex.test(this.state.username)) {
       return false
     }
@@ -94,7 +94,7 @@ class Register extends React.Component {
     return true
   }
 
-  handleOnSubmit (event) {
+  handleOnSubmit(event) {
     if (!this.isAllValid()) {
       event.preventDefault()
       return
@@ -110,7 +110,7 @@ class Register extends React.Component {
     event.preventDefault()
   }
 
-  render () {
+  render() {
     return (
       <div id='metriq-main-content' className='container'>
         <ViewHeader>Register</ViewHeader>
@@ -157,7 +157,7 @@ class Register extends React.Component {
             onChange={this.handleOnChange}
           />
           <FormFieldAlertRow>
-            <input type='checkbox' onChange={(event) => this.setState({ isAgreedToTerms: event.target.checked })} />
+            <input type='checkbox' className='terms-checkbox' onChange={(event) => this.setState({ isAgreedToTerms: event.target.checked })} />
             <b>&nbsp;I agree to the <a href='/MetriqTermsofUse' target='_blank'>Metriq Platform Terms of Use</a></b>
           </FormFieldAlertRow>
           <FormFieldAlertRow>

@@ -541,6 +541,11 @@ input[type="range"] {
 
 .password-visible-checkbox {
   display: inline-block;
+  margin-right: 8px;
+}
+
+.terms-checkbox {
+  margin-right: 8px;
 }
 
 .form-field-label {
