@@ -6,6 +6,15 @@
   padding: 10px 30px 10px 30px;
 }
 
+.footer-container a {
+  color: #68D0F4;
+  transition: color 0.2s ease;
+}
+
+.footer-container a:hover {
+  color: #93DCF5;
+}
+
 .footer-div {
   width: 100%;
   font-size: 0.875rem
