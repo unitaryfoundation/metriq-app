@@ -133,6 +133,16 @@ textarea {
   /* justify-content: center;*/
 }
 
+
+.metriq-navbar a[href="https://unitary.foundation"] img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.metriq-navbar a[href="https://unitary.foundation"] img:hover {
+  transform: scale(1.05);
+}
+
 .metriq-navbar-social-icon {
   margin-top: 2px;
   transition: opacity 0.2s ease, transform 0.2s ease;
