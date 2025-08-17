@@ -38,6 +38,11 @@
 .socialMediaLogo {
   margin-left: 22px;
   margin-right: 22px;
+  transition: opacity 0.2s ease;
+}
+
+.socialMediaLogo:hover {
+  opacity: 0.7;
 }
 
 .stay-connected-title {
