@@ -1,6 +1,6 @@
 a:link
 {
-    text-decoration: none !important;;
+    text-decoration: none !important;
 }
 
 .App {
@@ -38,6 +38,11 @@ textarea {
   padding: 0;
 }
 
+/* Hide search placeholder on focus */
+.search-accent input:focus::placeholder {
+  opacity: 0;
+}
+
 .main-search-bar {
   display: inline-block;
   padding-top: 8px;
@@ -69,6 +74,7 @@ textarea {
 .metriq-footer-button {
   font-size: smaller;
   margin-bottom: 3px;
+  margin-left: 8px;
   padding-top: 0;
   padding-bottom: 0;
   height: 26px;
@@ -77,10 +83,10 @@ textarea {
 .metriq-navbar.navbar {
   padding-top: 0;
   padding-bottom: 0;
+  height: 60px;
 }
 
 .metriq-navbar-right {
-  margin-top: 16px;
   margin-left: auto; 
   margin-right: 0;
 }
@@ -130,12 +136,24 @@ textarea {
 
 .metriq-navbar-social-icon {
   margin-top: 2px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.metriq-navbar-social-icon:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
 }
 
 .navbar-nav .metriq-navbar-text.nav-link {
-    padding-top: 0.6rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
     color: #FFFFFF;
     font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .metriq-navbar-text.nav-link:hover {
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .navbar-nav .metriq-navbar-text.nav-item {
@@ -158,7 +176,7 @@ textarea {
 
 .show > #metriq-navbar-dropdown.active {
   padding-top: 0.2rem;
-  color: #000000;
+  color: #FFFFFF;
   font-weight: bold;
 }
 
@@ -225,18 +243,18 @@ form > span > .row > label {
 }
 
 .form-field-validator {
-  display: inline;
+  display: none;
   color: red;
   padding-left: 5px;
 }
 
 .logo-image {
   display: inline-block;
-  width: 140px;
+  width: 120px;
   height: auto;
   max-width: 180px;
   max-height: 180px;
-  padding: 12px;
+  padding: 8px;
 }
 
 .view-header {
@@ -732,4 +750,36 @@ iframe {
 .user-activity-tabs .nav-link.active {
   background-color: #04165D;
   color: #ffffff !important;
+}
+
+/* UF logo hover effect */
+.metriq-navbar a[href="https://unitary.foundation"] img {
+  transition: transform 0.2s ease;
+}
+
+.metriq-navbar a[href="https://unitary.foundation"] img:hover {
+  transform: scale(1.05);
+}
+
+/* Footer link colors */
+.footer-container a {
+  color: #68D0F4;
+}
+
+.footer-container a:hover {
+  color: #a8e0f4;
+}
+
+/* Checkbox spacing */
+.password-visible-checkbox {
+  margin-right: 8px;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Register page terms checkbox */
+.terms-checkbox {
+  margin-right: 8px;
 }
