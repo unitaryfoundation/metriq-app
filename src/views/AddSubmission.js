@@ -490,6 +490,7 @@ class AddSubmission extends React.Component {
             <FormFieldRow
               inputName='codeUrl' inputType='text' label='Code URL'
               onChange={this.handleOnChange}
+              validRegex={blankOrurlValidRegex}
               value={this.state.codeUrl}
             />
             <FormFieldAlertRow>
@@ -498,7 +499,8 @@ class AddSubmission extends React.Component {
             <FormFieldRow
               inputName='supplementUrl' inputType='text' label='Supplement URL'
               onChange={this.handleOnChange}
-              value={this.state.codeUrl}
+              validRegex={blankOrurlValidRegex}
+              value={this.state.supplementUrl}
             />
             <FormFieldAlertRow>
               <b>(Optional) A URL that points to relevant supplemental materials, (like a DOI).</b>

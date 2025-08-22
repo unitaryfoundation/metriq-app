@@ -742,24 +742,24 @@ class Submission extends React.Component {
             <Button className='submission-button' variant={this.state.item.isUpvoted ? 'primary' : 'secondary'} aria-label={(this.state.item.isUpvoted ? 'Cancel like' : 'Like')} onClick={this.handleUpVoteOnClick}><FontAwesomeIcon icon='heart' /> {this.state.item.upvotesCount}</Button>
           </TooltipTrigger>
           <TooltipTrigger message='Submission link'>
-            <Button className='submission-button' variant='secondary' aria-label='Visit submission link' onClick={() => { window.open(this.state.item.contentUrl, '_blank') }}><FontAwesomeIcon icon={faLink} /></Button>
+            <Button className='submission-button' variant='secondary' aria-label='Visit submission link' onClick={() => { if (/^https?:\/\//i.test(this.state.item.contentUrl)) { window.open(this.state.item.contentUrl, '_blank', 'noopener,noreferrer') } }}><FontAwesomeIcon icon={faLink} /></Button>
           </TooltipTrigger>
           {this.state.isArxiv &&
             <span>
               <TooltipTrigger message='Mobile view preprint'>
-                <Button className='submission-button' variant='secondary' aria-label='Visit submission mobile view link' onClick={() => { window.open(this.state.vanityUrl, '_blank') }}><FontAwesomeIcon icon={faMobileAlt} /></Button>
+                <Button className='submission-button' variant='secondary' aria-label='Visit submission mobile view link' onClick={() => { if (/^https?:\/\//i.test(this.state.vanityUrl)) { window.open(this.state.vanityUrl, '_blank', 'noopener,noreferrer') } }}><FontAwesomeIcon icon={faMobileAlt} /></Button>
               </TooltipTrigger>
               <TooltipTrigger message='BibTex reference'>
-                <Button className='submission-button' variant='secondary' aria-label='Get arXiv BibTex reference' onClick={() => { window.open(this.state.bibtexUrl, '_blank') }}><FontAwesomeIcon icon={faSuperscript} /></Button>
+                <Button className='submission-button' variant='secondary' aria-label='Get arXiv BibTex reference' onClick={() => { if (/^https?:\/\//i.test(this.state.bibtexUrl)) { window.open(this.state.bibtexUrl, '_blank', 'noopener,noreferrer') } }}><FontAwesomeIcon icon={faSuperscript} /></Button>
               </TooltipTrigger>
             </span>}
           {this.state.codeUrl &&
             <TooltipTrigger message='Code link'>
-              <Button className='submission-button' variant='secondary' aria-label='Visit code link' onClick={() => { window.open(this.state.codeUrl, '_blank') }}><FontAwesomeIcon icon={faCode} /></Button>
+              <Button className='submission-button' variant='secondary' aria-label='Visit code link' onClick={() => { if (/^https?:\/\//i.test(this.state.codeUrl)) { window.open(this.state.codeUrl, '_blank', 'noopener,noreferrer') } }}><FontAwesomeIcon icon={faCode} /></Button>
             </TooltipTrigger>}
           {this.state.supplementUrl &&
             <TooltipTrigger message='Supplement link'>
-              <Button className='submission-button' variant='secondary' aria-label='Visit code link' onClick={() => { window.open(this.state.supplementUrl, '_blank') }}><FontAwesomeIcon icon={faDownload} /></Button>
+              <Button className='submission-button' variant='secondary' aria-label='Visit code link' onClick={() => { if (/^https?:\/\//i.test(this.state.supplementUrl)) { window.open(this.state.supplementUrl, '_blank', 'noopener,noreferrer') } }}><FontAwesomeIcon icon={faDownload} /></Button>
             </TooltipTrigger>}
           <TooltipTrigger message='Edit submission'>
             <Button className='submission-button' variant='secondary' aria-label='Edit submission' onClick={this.handleEditSubmissionDetails}><FontAwesomeIcon icon='edit' /></Button>

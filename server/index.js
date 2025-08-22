@@ -19,6 +19,17 @@ const truncateBefore = function (str, pattern) {
   return str.slice(str.indexOf(pattern) + pattern.length)
 }
 
+// Escape data for safe insertion in HTML text/attribute contexts.
+// This prevents breaking out of tags/attributes and mitigates XSS.
+const escapeHtmlForAttribute = function (value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 // Static resources should just be served as they are.
 app.use(express.static(
   path.resolve(__dirname, '..', 'build'),
@@ -93,15 +104,18 @@ app.get('*', (req, res, next) => {
       title = title.substring(0, 47) + '...'
     }
 
-    description = description.split('"').join("'")
+    // Escape dynamic content before injecting into HTML
+    const safeTitle = escapeHtmlForAttribute(title)
+    const safeDescription = escapeHtmlForAttribute(description)
+    const safeOgUrl = escapeHtmlForAttribute('https://metriq.info' + req.url)
 
     // inject meta tags
     htmlData = htmlData
-      .replace(defaultTitle, title)
-      .replace(defaultTitle, title)
-      .replace(defaultDescription, description)
-      .replace(defaultDescription, description)
-      .replace("content='https://metriq.info'", "content='https://metriq.info" + req.url + "'")
+      .replace(defaultTitle, safeTitle)
+      .replace(defaultTitle, safeTitle)
+      .replace(defaultDescription, safeDescription)
+      .replace(defaultDescription, safeDescription)
+      .replace("content='https://metriq.info'", "content='" + safeOgUrl + "'")
     return res.send(htmlData)
   })
 })

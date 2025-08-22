@@ -80,7 +80,9 @@ const SubmissionBox = (props) => {
   }
 
   const handleExternalLinkClick = (event) => {
-    window.open(props.item.contentUrl, '_blank')
+    if (/^https?:\/\//i.test(props.item.contentUrl)) {
+      window.open(props.item.contentUrl, '_blank', 'noopener,noreferrer')
+    }
     event.preventDefault()
   }
 
