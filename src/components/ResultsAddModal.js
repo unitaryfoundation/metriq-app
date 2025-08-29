@@ -3,6 +3,7 @@ import React, { useState, Suspense, useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import config from '../config'
 import ErrorHandler from './ErrorHandler'
+import { canAppendToSubmission, isSubmissionRestricted } from '../utils/accessControl'
 import { nonblankRegex, metricValueRegex, dateRegex, standardErrorRegex, numeralRegex } from './ValidationRegex'
 const FormFieldRow = React.lazy(() => import('./FormFieldRow'))
 const FormFieldSelectRow = React.lazy(() => import('./FormFieldSelectRow'))
@@ -76,7 +77,16 @@ const ResultsAddModal = (props) => {
     return true
   }
 
-  const handleAddModalSubmit = (isDuplicating) => {
+  const handleAddModalSubmit = async (isDuplicating) => {
+    // Frontend access control: block adding results for restricted submissions
+    if (await isSubmissionRestricted(props.submission?.id, props.submission)) {
+      const allowed = await canAppendToSubmission(props.submission?.id, props.submission)
+      if (!allowed) {
+        window.alert('Access restricted: Only approved contributors can append results to this submission.')
+        return
+      }
+    }
+
     const resultCopy = { ...result }
     if (!nonblankRegex.test(resultCopy.metricName)) {
       window.alert('Error: Metric Name cannot be blank.')
