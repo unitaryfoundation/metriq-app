@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import EditButton from './EditButton'
@@ -6,17 +6,55 @@ import FormFieldWideRow from './FormFieldWideRow'
 const SortingTable = React.lazy(() => import('../components/SortingTable'))
 const TooltipTrigger = React.lazy(() => import('./TooltipTrigger'))
 
+import { canAppendToSubmission, isSubmissionRestricted } from '../utils/accessControl'
+
 const ResultsTable = (props) => {
+  const [effectiveDisabled, setEffectiveDisabled] = useState(!!props.disabled)
+  const [restricted, setRestricted] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    const compute = async () => {
+      try {
+        // Try to parse submission id from URL: /Submission/:id
+        const match = (window.location && window.location.pathname || '').match(/\/Submission\/(\d+)/i)
+        const submissionId = match ? Number(match[1]) : undefined
+
+        const isRestricted = submissionId ? isSubmissionRestricted(submissionId) : false
+        setRestricted(isRestricted)
+
+        if (props.disabled) {
+          setEffectiveDisabled(true)
+          return
+        }
+        if (!isRestricted) {
+          setEffectiveDisabled(false)
+          return
+        }
+        if (!submissionId) {
+          setEffectiveDisabled(true)
+          return
+        }
+        const allowed = await canAppendToSubmission(submissionId)
+        if (!cancelled) setEffectiveDisabled(!allowed)
+      } catch (e) {
+        if (!cancelled) setEffectiveDisabled(!!props.disabled)
+      }
+    }
+    compute()
+    return () => { cancelled = true }
+  }, [props.disabled])
+
   return (
     <FormFieldWideRow>
       <div className='card taxonomy-card'>
         <div className='card-title'>
-          <h5>Results
+          <h5>Results{restricted && <span className='badge bg-warning text-dark ms-2'>Restricted</span>}
             <EditButton
               className='float-end edit-button btn'
               onClickAdd={props.onClickAdd}
               onClickRemove={props.onClickRemove}
-              disabled={props.disabled}
+              disabled={effectiveDisabled}
             />
           </h5>
           <small><i>Results are metric name/value pairs that can be extracted from Submissions (papers, codebases, etc.)</i></small>
