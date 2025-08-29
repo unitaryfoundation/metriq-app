@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import EditButton from './EditButton'
 import FormFieldWideRow from './FormFieldWideRow'
+import { canAppendToSubmission, isSubmissionRestricted } from '../utils/accessControl'
 const SortingTable = React.lazy(() => import('../components/SortingTable'))
 const TooltipTrigger = React.lazy(() => import('./TooltipTrigger'))
 
-import { canAppendToSubmission, isSubmissionRestricted } from '../utils/accessControl'
 
 const ResultsTable = (props) => {
   const [effectiveDisabled, setEffectiveDisabled] = useState(!!props.disabled)
