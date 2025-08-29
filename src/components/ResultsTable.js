@@ -20,7 +20,7 @@ const ResultsTable = (props) => {
         const match = (window.location && window.location.pathname || '').match(/\/Submission\/(\d+)/i)
         const submissionId = match ? Number(match[1]) : undefined
 
-        const isRestricted = submissionId ? isSubmissionRestricted(submissionId) : false
+        const isRestricted = submissionId ? await isSubmissionRestricted(submissionId, props.submission) : false
         setRestricted(isRestricted)
 
         if (props.disabled) {
@@ -35,7 +35,7 @@ const ResultsTable = (props) => {
           setEffectiveDisabled(true)
           return
         }
-        const allowed = await canAppendToSubmission(submissionId)
+        const allowed = await canAppendToSubmission(submissionId, props.submission)
         if (!cancelled) setEffectiveDisabled(!allowed)
       } catch (e) {
         if (!cancelled) setEffectiveDisabled(!!props.disabled)

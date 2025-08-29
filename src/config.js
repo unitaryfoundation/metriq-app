@@ -26,7 +26,7 @@ module.exports = config
 // Configure restricted submissions and privileged users.
 // Set env var REACT_APP_PRIVILEGED_USERS to a comma-separated list of usernames.
 config.acl = {
-  restrictedSubmissionIds: [800],
+  restrictedSubmissionIds: [],
   privilegedUsers: (process.env.REACT_APP_PRIVILEGED_USERS || '')
     .split(',')
     .map(s => s.trim())

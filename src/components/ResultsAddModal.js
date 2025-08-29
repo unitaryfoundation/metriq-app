@@ -79,8 +79,8 @@ const ResultsAddModal = (props) => {
 
   const handleAddModalSubmit = async (isDuplicating) => {
     // Frontend access control: block adding results for restricted submissions
-    if (isSubmissionRestricted(props.submission?.id)) {
-      const allowed = await canAppendToSubmission(props.submission?.id)
+    if (await isSubmissionRestricted(props.submission?.id, props.submission)) {
+      const allowed = await canAppendToSubmission(props.submission?.id, props.submission)
       if (!allowed) {
         window.alert('Access restricted: Only approved contributors can append results to this submission.')
         return
