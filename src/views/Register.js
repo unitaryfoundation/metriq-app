@@ -157,8 +157,8 @@ class Register extends React.Component {
             onChange={this.handleOnChange}
           />
           <FormFieldAlertRow>
-            <input type='checkbox' onChange={(event) => this.setState({ isAgreedToTerms: event.target.checked })} />
-            <b>&nbsp;I agree to the <a href='/MetriqTermsofUse' target='_blank'>Metriq Platform Terms of Use</a></b>
+            <input type='checkbox' className='terms-checkbox' onChange={(event) => this.setState({ isAgreedToTerms: event.target.checked })} />
+            <b>I agree to the <a href='/MetriqTermsofUse' target='_blank'>Metriq Platform Terms of Use</a></b>
           </FormFieldAlertRow>
           <FormFieldAlertRow>
             <FormFieldValidator invalid={!this.state.isPasswordMatch} message={passwordMismatchError} /><br />
