@@ -1,0 +1,57 @@
+/* tree.css — Linux‑tree‑style rendering */
+
+.method-tree {
+  margin-top: 20px;
+  text-align: left; 
+}
+
+/* Root list and every nested <ul> */
+.tree-root,
+.tree-root ul {
+  list-style: none;   /* no bullets */
+  margin: 0;          /* no extra vertical gap */
+  padding: 0;         /* indentation handled by ASCII prefix */
+}
+
+/* Remove the dotted vertical guide that caused mis‑alignment */
+.tree-root ul::before {
+  content: none;
+}
+
+/* Each node line */
+.tree-node {
+  margin: 4px 0;
+  font-family: monospace;  /* makes the ASCII lines line‑up */
+}
+
+/* The printable ASCII prefix (│, ├──, └──) */
+.tree-prefix {
+  white-space: pre;        /* keep spaces exactly as typed */
+  cursor: pointer;         /* becomes a hand only on expandable nodes
+                              (set inline in JS) */
+  user-select: none;       /* avoid accidental text selection */
+}
+
+/* Clickable label */
+.tree-label {
+  text-decoration: none;
+  margin-left: 4px;        /* small gap after the prefix */
+}
+
+/* Loading indicator */
+.tree-loading {
+  margin-left: 6px;
+  font-style: italic;
+  font-family: system-ui, sans-serif;
+}
+
+/* clickable + / − control */
+.tree-toggle,
+.tree-toggle-placeholder {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
