@@ -21,3 +21,14 @@ config.web.getUriPrefix = () => {
 }
 
 module.exports = config
+
+// Access control (frontend-only guard)
+// Configure restricted submissions and privileged users.
+// Set env var REACT_APP_PRIVILEGED_USERS to a comma-separated list of usernames.
+config.acl = {
+  restrictedSubmissionIds: [],
+  privilegedUsers: (process.env.REACT_APP_PRIVILEGED_USERS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean)
+}
